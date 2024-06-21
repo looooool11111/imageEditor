@@ -1,0 +1,54 @@
+.container {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  background-color: black;
+
+  .container-imagebox {
+    height: 80%;
+    width: 100%;
+    background-color: black;
+    overflow: hidden;
+  }
+
+  .tool-bar {
+    position: fixed;
+    bottom: 0;
+    background-color: #fff;
+    height: 20%;
+    width: 100%;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &-upload {
+      background-image: url('../../assets/upload.png');
+      background-size: cover;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+
+      &-btn {
+        opacity: 0;
+        width: 40px;
+      }
+    }
+
+    &-upload input[type="file"] {
+      appearance: none;
+      background-color: initial;
+      cursor: default;
+      align-items: baseline;
+      color: inherit;
+      text-overflow: ellipsis;
+      text-align: start !important;
+      padding: initial;
+      border: initial;
+      white-space: pre;
+      overflow: hidden !important;
+    }
+  }
+}
