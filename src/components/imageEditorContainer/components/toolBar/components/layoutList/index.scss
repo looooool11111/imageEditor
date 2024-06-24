@@ -1,0 +1,27 @@
+.layout-list {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%; // 确保容器的宽度
+  flex-wrap: wrap;
+  height: 5rem;
+  overflow-y: scroll;
+
+  &-item {
+    flex-basis: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 2.8rem;
+    margin-bottom: 1rem;
+
+    &-icon {
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .isLast {
+    margin-right: 0;
+  }
+}

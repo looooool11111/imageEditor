@@ -7,7 +7,7 @@
 }
 
 .resizable-container__focus {
-  border: 2px solid gold;
+  border: 2px solid #EB4E89;
 }
 
 .resizable-image {
@@ -19,7 +19,7 @@
 
 .resizable-handle {
   position: absolute;
-  background: gold;
+  background: #EB4E89;
   cursor: se-resize;
   z-index: 999;
 }
@@ -29,6 +29,7 @@
   height: 5px;
   top: 0;
   left: 50%;
+  margin-left: -20px;
 }
 
 .left {
@@ -50,6 +51,7 @@
   height: 5px;
   bottom: 0;
   left: 50%;
+  margin-left: -20px;
 }
 
 .resizable-overlay {
