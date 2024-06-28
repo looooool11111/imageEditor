@@ -43,7 +43,7 @@ const ResizableDraggableElement = ({
   const [startPos, setStartPos] = useState<{ x: number; y: number } | null>(
     null
   );
-  const [isClick, setIsClick] = useState(true); // 新增的状态标志
+  const [isClick, setIsClick] = useState(true);
   const { layout, containerInfo } = useSelector((state: any) => state.system);
 
   useEffect(() => {
@@ -51,6 +51,7 @@ const ResizableDraggableElement = ({
       width: initialWidth,
       height: initialHeight,
     });
+    console.log(initialWidth, initialHeight);
   }, [initialWidth, initialHeight]);
 
   const handleTouchStart = useCallback(
@@ -99,39 +100,59 @@ const ResizableDraggableElement = ({
       const containerElement = containerRef.current.parentElement;
       if (!containerElement) return;
 
-      const minHeight = containerInfo.height * 0.1;
-      const minWidth = containerInfo.width * 0.1;
-
+      const minHeight = containerInfo.height * 0.2;
+      const minWidth = containerInfo.width * 0.2;
+      const maxHeight = containerInfo.height * 0.8;
+      const maxWidth = containerInfo.width * 0.8;
       let newWidth = parseInt(dimensions.width);
       let newHeight = parseInt(dimensions.height);
+
       switch (resizeDirection) {
         case 'top':
-          newHeight = Math.max(newHeight - dy, minHeight);
+          if (dy < 0) {
+            // 向上拖动，只放大
+            newHeight = Math.min(newHeight - dy, maxHeight);
+          } else {
+            // 向下拖动，只缩小
+            newHeight = Math.max(newHeight - dy, minHeight);
+          }
           break;
         case 'right':
-          newWidth = Math.min(
-            Math.max(newWidth + dx, minWidth),
-            containerInfo.width
-          );
+          if (dx > 0) {
+            // 向右拖动，只放大
+            newWidth = Math.min(newWidth + dx, maxWidth);
+          } else {
+            // 向左拖动，只缩小
+            newWidth = Math.max(newWidth + dx, minWidth);
+          }
           break;
         case 'bottom':
-          newHeight = Math.min(
-            Math.max(newHeight + dy, minHeight),
-            containerInfo.height
-          );
+          if (dy > 0) {
+            // 向下拖动，只放大
+            newHeight = Math.min(newHeight + dy, maxHeight);
+          } else {
+            // 向上拖动，只缩小
+            newHeight = Math.max(newHeight + dy, minHeight);
+          }
           break;
         case 'left':
-          newWidth = Math.max(newWidth - dx, minWidth);
+          if (dx < 0) {
+            // 向左拖动，只放大
+            newWidth = Math.min(newWidth - dx, maxWidth);
+          } else {
+            // 向右拖动，只缩小
+            newWidth = Math.max(newWidth - dx, minWidth);
+          }
           break;
       }
 
       setDimensions({
-        width: `${newWidth}px`,
-        height: `${newHeight}px`,
+        width: `${newWidth}`,
+        height: `${newHeight}`,
       });
       setStartPos({ x: clientX, y: clientY });
     },
-    [startPos, resizeDirection, dimensions, setIsResizing]
+    [startPos, resizeDirection, dimensions, setIsResizing, containerInfo]
   );
 
   const handleTouchEnd = useCallback(() => {
@@ -145,6 +166,7 @@ const ResizableDraggableElement = ({
       updateDimensions(id, dimensions);
     }
   }, [isClick, chooseItem, id, updateDimensions, dimensions, setIsResizing]);
+
   useEffect(() => {
     if (resizeDirection) {
       document.addEventListener('touchmove', handleTouchMove);
@@ -156,8 +178,13 @@ const ResizableDraggableElement = ({
       };
     }
   }, [resizeDirection, handleTouchMove, handleTouchEnd]);
+
   return (
-    <Droppable droppableId="droppable-1" type="PERSON">
+    <Droppable
+      droppableId="droppable-1"
+      type="PERSON"
+      isDropDisabled={isResizing}
+    >
       {(provided, snapshot) => (
         <div
           ref={provided.innerRef}
@@ -173,8 +200,8 @@ const ResizableDraggableElement = ({
               choosenId === id ? 'resizable-container__focus' : ''
             }`}
             style={{
-              width: dimensions.width,
-              height: dimensions.height,
+              width: `${dimensions.width}px`,
+              height: `${dimensions.height}px`,
               touchAction: 'none',
             }}
           >
@@ -198,7 +225,6 @@ const ResizableDraggableElement = ({
                     onTouchStart={(e) => handleTouchStart(e, 'bottom')}
                   ></div>
                 )}
-
                 {!firstElementIndex && layout == 'vertical' && (
                   <div
                     className="resizable-handle left"

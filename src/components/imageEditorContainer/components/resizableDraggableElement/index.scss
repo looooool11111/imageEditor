@@ -15,6 +15,7 @@
   height: 100%;
   display: block;
   object-fit: cover;
+  image-rendering: -webkit-optimize-contrast;
 }
 
 .resizable-handle {

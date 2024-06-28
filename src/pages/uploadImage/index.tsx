@@ -2,6 +2,7 @@ import React, { useState, useRef, useCallback } from 'react';
 import ImageEditorContainer from '@/components/imageEditorContainer';
 import useImage from '@/hooks/useImage';
 import './index.scss';
+import ElementsEditor from '@/components/elementsEditor';
 
 let idCounter = 0; // 全局计数器
 
@@ -27,6 +28,9 @@ function UploadImage() {
         <ImageEditorContainer
           initElementsArr={imageArr}
           containerImageBoxRef={containerImageBoxRef}
+          resetBack={() => {
+            setImageArr([]);
+          }}
         />
       );
     } else {
@@ -42,7 +46,12 @@ function UploadImage() {
       );
     }
   };
-  return <div className="content">{render()}</div>;
+  return (
+    <div className="content">
+      {render()}
+      {/* <ElementsEditor /> */}
+    </div>
+  );
 }
 
 export default UploadImage;

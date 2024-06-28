@@ -2,18 +2,25 @@
   width: 100%;
   height: 100vh;
   position: relative;
-  // background-color: black;
 
-  &-imagebox {
+  // background-color: black;
+  &-body {
     height: 75%;
     width: 100%;
     background-color: black;
     overflow: hidden;
     padding: 20px;
+
+    box-sizing: border-box;
+  }
+
+  &-imagebox {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-sizing: border-box;
 
     .image-item {
       width: 100%;

@@ -20,14 +20,14 @@ const LayoutList = ({ closeFocusElement }: IProps) => {
   );
   const modelList = [
     {
-      id: 'vertical',
-      src: VerticalIcon,
-      activeSrc: VerticalIconActive,
-    },
-    {
       id: 'horizational',
       src: HorizationalIcon,
       activeSrc: HorizationalIconActive,
+    },
+    {
+      id: 'vertical',
+      src: VerticalIcon,
+      activeSrc: VerticalIconActive,
     },
   ];
   const handleLayout = (item: any) => {
@@ -36,16 +36,16 @@ const LayoutList = ({ closeFocusElement }: IProps) => {
       newElements = elements.map((item: any) => {
         return {
           ...item,
-          width: `${containerInfo.width / elements.length}px`,
-          height: `${containerInfo.height}px`,
+          width: `${containerInfo.width / elements.length}`,
+          height: `${containerInfo.height}`,
         };
       });
     } else {
       newElements = elements.map((item: any) => {
         return {
           ...item,
-          height: `${containerInfo.height / elements.length}px`,
-          width: `${containerInfo.width}px`,
+          height: `${containerInfo.height / elements.length}`,
+          width: `${containerInfo.width}`,
         };
       });
     }
